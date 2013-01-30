@@ -10,12 +10,11 @@
 
 <div ng-app="project">
 
-    <h2>Apigee UserGrid Endpoints</h2>
     <div ng-view></div>
 
     <!-- CACHE FILE: list.html -->
     <script type="text/ng-template" id="list.html">
-        <input type="text" ng-model="endpointName" placeholder="Enter a endpoint here" ng-change="declareEndpoint()">
+        <input type="text" ng-model="endpointName" placeholder="Enter a usergrid endpoint here" ng-change="declareEndpoint()">
         <hr/>
         <table>
             <thead style="margin: 0 0 10px 0">
@@ -26,9 +25,16 @@
             </thead>
             <tbody>
             <tr ng-repeat="project in projects.entities | filter:search | orderBy:'username'">
-                <td><a href="{{project.username}}" target="_blank">{{project.username}}</a></td>
-                <td><a href="{{project.title}}" target="_blank">{{project.title}}</a></td>
-                <td><a href="{{project.uuid}}" target="_blank">{{project.uuid}}</a></td>
+                <td ng-repeat="(k, v) in project"><a href="{{project}}" target="_blank">{{k}}</a>:
+                    <!--http://jsfiddle.net/pkozlowski_opensource/bBtH3/2/-->
+                   <div ng-switch on="isDeep(v)">
+                       <div ng-switch-when="true">
+                          <li ng-repeat="v2 in v">{{v2}}</li>
+                       </div>
+                       <div ng-switch-when="false">
+                           <span>{{v}}</span>
+                       </div>
+                   </div>
             </tr>
             </tbody>
         </table>
