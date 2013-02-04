@@ -1,0 +1,49 @@
+<html>
+<head>
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular-resource.min.js"></script>
+    <script src="angular-app.js"></script>
+</head>
+<body>
+
+
+<div ng-app="project">
+
+    <div ng-view></div>
+
+    <!-- CACHE FILE: list.html -->
+    <script type="text/ng-template" id="list.html">
+        <input type="text" ng-model="endpointName" placeholder="Enter a usergrid endpoint here" ng-change="declareEndpoint()">
+        <hr/>
+        <table>
+            <thead style="margin: 0 0 10px 0">
+            <tr>
+                <th><input type="text" ng-model="search" class="search-query" placeholder="Search"></th>
+                <th><a href="#/new"><i class="icon-plus-sign"></i></a></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="project in projects.entities | filter:search | orderBy:'username'">
+                <td ng-repeat="(k, v) in project"><a href="{{project}}" target="_blank">{{k}}</a>:
+                    <!--http://jsfiddle.net/pkozlowski_opensource/bBtH3/2/-->
+                   <div ng-switch on="isDeep(v)">
+                       <div ng-switch-when="true">
+                          <li ng-repeat="v2 in v">{{v2}}</li>
+                       </div>
+                       <div ng-switch-when="false">
+                           <span>{{v}}</span>
+                       </div>
+                   </div>
+            </tr>
+            </tbody>
+        </table>
+    </script>
+
+</div>
+
+
+
+
+</body>
+</html>
